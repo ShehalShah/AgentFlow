@@ -1,0 +1,12 @@
+# requirements.txt (backend + worker)
+fastapi
+uvicorn
+pydantic
+celery
+redis
+langchain
+openai
+qdrant-client
+sqlalchemy
+psycopg2-binary
+fastapi-cors
