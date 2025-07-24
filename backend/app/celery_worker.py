@@ -1,4 +1,9 @@
 from celery import Celery
+# Import models to ensure they are registered with SQLAlchemy
+from app.models import Workflow, WorkflowRun
+
+# Import tasks to ensure they are registered with Celery
+import app.workers.runner
 
 celery_app = Celery(
     "agentflow",
@@ -9,9 +14,3 @@ celery_app = Celery(
 celery_app.conf.task_routes = {
     "app.workers.runner.run_workflow": {"queue": "workflows"},
 }
-
-# Import models to ensure they are registered with SQLAlchemy
-from app.models import Workflow, WorkflowRun
-
-# Import tasks to ensure they are registered with Celery
-import app.workers.runner

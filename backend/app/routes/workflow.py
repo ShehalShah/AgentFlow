@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Body
 from sqlalchemy.orm import Session
 from ..schemas.workflow import WorkflowSchema, WorkflowCreate
 from ..models.workflow import Workflow
 from ..database import get_db  
 from app.workers.runner import run_workflow
+from app.agent.llm_planner import generate_steps_from_intent
 
 router = APIRouter()
 
@@ -25,6 +26,12 @@ def create_workflow(workflow: WorkflowCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_workflow)
     return db_workflow
+
+@router.post("/workflow/plan")
+def plan_workflow(prompt: str = Body(..., embed=True)):
+    steps = generate_steps_from_intent(prompt)
+    return {"steps": steps}
+
 
 @router.get("/workflows/{workflow_id}", response_model=WorkflowSchema)
 def get_workflow(workflow_id: int, db: Session = Depends(get_db)):
@@ -63,5 +70,3 @@ def run_saved_workflow(workflow_id: int, db: Session = Depends(get_db)):
     db.commit()
 
     return {"run_id": run.id, "task_id": task.id}
-
-
