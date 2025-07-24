@@ -10,3 +10,6 @@ qdrant-client
 sqlalchemy
 psycopg2-binary
 fastapi-cors
+requests
+python-dotenv
+sendgrid

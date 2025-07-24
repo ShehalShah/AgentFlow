@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 DATABASE_URL = "postgresql://postgres:Post1234@localhost:5432/agentflow"
+# DATABASE_URL = "postgresql+psycopg2://postgres:shiv@localhost:5432/agentflow"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)
