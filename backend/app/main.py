@@ -26,3 +26,5 @@ app.include_router(workflow_run.router)
 
 # celery -A app.celery_app.celery worker --loglevel=info -Q workflows
 # uvicorn app.main:app --reload
+# docker run -d -p 6379:6379 redis
+
